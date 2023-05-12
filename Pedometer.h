@@ -1,4 +1,4 @@
-#include "MKL46Z4.h"
+#include "stm32f10x.h"                  // Device header
 
 void Init(void);
-void PORTC_PORTD_IRQHandler(void);
+void DelayMs(uint32_t);

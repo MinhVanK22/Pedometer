@@ -1,25 +1,30 @@
-#include "MKL46Z4.h"
+#include "stm32f10x.h"                  // Device header
 
 void Init(void) {
-	/* Init green led and red led */
-	SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
-	PORTD->PCR[5] |= PORT_PCR_MUX(1u);
-	PTD->PDDR |= (1u<<5);
+	//Init LED and switch
+	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN | RCC_APB2ENR_IOPCEN;
 	
-	SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK;
-	PORTE->PCR[29] |= PORT_PCR_MUX(1u);
-	PTE->PDDR |= (1u<<29);
+	GPIOC->CRH |= GPIO_CRH_MODE13;
 	
-	/* Init SW1 and SW3 */
-	SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
-	PORTC->PCR[3] = PORT_PCR_MUX(1u) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;
-	PORTC->PCR[12] = PORT_PCR_MUX(1u) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;
-	PTC->PDDR &= ~(1u<<3);
-	PTC->PDDR &= ~(1u<<12);
+	GPIOA->CRL |= GPIO_CRL_MODE6;
+	GPIOA->CRL &= ~GPIO_CRL_CNF6; //Noi VDD
 	
-	/* Set interrupt for switch*/
-	PORTC->PCR[3] |= PORT_PCR_IRQC(0xA); //ngat o suon giam
-	PORTC->PCR[12] |= PORT_PCR_IRQC(0xA);
-	NVIC_ClearPendingIRQ(31);
-	NVIC_EnableIRQ(31);
+	GPIOA->CRH &= ~GPIO_CRH_CNF8;
+	GPIOA->CRH |= GPIO_CRH_CNF8_1;
+	GPIOA->ODR |= (1u<<8); //pull up
+	
+	GPIOA->CRH &= ~GPIO_CRH_CNF9;
+	GPIOA->CRH |= GPIO_CRH_CNF9_1;
+	GPIOA->ODR |= (1u<<9); //pull up
+	
+	//Init interrupt line 8 and line 9
+	EXTI->IMR |= EXTI_IMR_MR8 | EXTI_IMR_MR9; //Ngat Enable line 8 va 9
+	EXTI->FTSR |= EXTI_FTSR_TR8 | EXTI_FTSR_TR9; //Chon ngat suon giam o line 8 va 9
+	NVIC_ClearPendingIRQ(EXTI9_5_IRQn);
+	NVIC_EnableIRQ(EXTI9_5_IRQn);
+	//NVIC_SetPriority(EXTI9_5_IRQn,4);
+	
+	//Init SysTick timer
+	SysTick->LOAD = SystemCoreClock / 1000;
+	SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk;
 }

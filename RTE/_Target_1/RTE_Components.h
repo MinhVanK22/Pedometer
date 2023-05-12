@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'Pedometer' 
+ * Project: 'LED_test' 
  * Target:  'Target 1' 
  */
 
@@ -14,7 +14,7 @@
 /*
  * Define the Device Header File: 
  */
-#define CMSIS_device_header "fsl_device_registers.h"
+#define CMSIS_device_header "stm32f10x.h"
 
 
 #endif /* RTE_COMPONENTS_H */
