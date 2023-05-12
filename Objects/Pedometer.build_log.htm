@@ -16,34 +16,26 @@ Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
 Library Manager: ArmAr.exe V5.06 update 6 (build 750)
 Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
 CPU DLL:         SARMCM3.DLL V5.26.2.0
-Dialog DLL:      DARMCM1.DLL V1.19.1.0
-Target DLL:      UL2CM3.DLL V1.161.6.0
-Dialog DLL:      TARMCM1.DLL V1.14.0.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.5.0
+Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
-D:\KEIL_FILE\Pedometer\Pedometer.uvprojx
-Project File Date:  04/20/2023
+D:\GitHub\Pedometer\Pedometer.uvprojx
+Project File Date:  05/12/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-assembling startup_MKL46Z4.s...
-compiling main.c...
+assembling startup_stm32f10x_md.s...
+compiling system_stm32f10x.c...
+compiling SysTick_Handler.c...
 compiling Init.c...
-Init.c(23): warning:  #188-D: enumerated type mixed with another type
-  	NVIC_ClearPendingIRQ(31);
-Init.c(24): warning:  #188-D: enumerated type mixed with another type
-  	NVIC_EnableIRQ(31);
-Init.c: 2 warnings, 0 errors
-compiling PORTC_PORTD_IRQHandler.c...
-compiling system_MKL46Z4.c...
+compiling main.c...
+compiling LED_IRQHandler.c...
 linking...
-.\Objects\Pedometer.axf: Warning: L6914W: option ro-base ignored when using --scatter.
-.\Objects\Pedometer.axf: Warning: L6914W: option rw-base ignored when using --scatter.
-.\Objects\Pedometer.axf: Warning: L6340W: options first and last are ignored for link type of scattered
-Program Size: Code=608 RO-data=208 RW-data=0 ZI-data=2048  
-Finished: 0 information, 3 warning and 0 error messages.
-".\Objects\Pedometer.axf" - 0 Error(s), 5 Warning(s).
+Program Size: Code=1172 RO-data=268 RW-data=24 ZI-data=1632  
+".\Objects\Pedometer.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -53,29 +45,28 @@ Package Vendor: ARM
                 CMSIS (Common Microcontroller Software Interface Standard)
    * Component: CORE Version: 5.6.0
 
-Package Vendor: NXP
-                http://mcuxpresso.nxp.com/cmsis_pack/repo/NXP.MKL46Z4_DFP.10.0.3.pack
-                NXP.MKL46Z4_DFP.10.0.3
-                Device Family Pack for MKL46Z4
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.4.0.pack
+                Keil.STM32F1xx_DFP.2.4.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
    * Component: Startup Version: 1.0.0
 
 <h2>Collection of Component include folders:</h2>
-  .\RTE\Device\MKL46Z256VLL4
+  .\RTE\Device\STM32F103C8
   .\RTE\_Target_1
   D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include
+  D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.6.0
 
-   * Component: NXP::Device:Startup:1.0.0
-      Include file:  MKL46Z4.h
-      Include file:  fsl_device_registers.h
-      Source file:   arm\startup_MKL46Z4.s
-      Source file:   system_MKL46Z4.c
-      Include file:  system_MKL46Z4.h
-      Include file:  MKL46Z4_features.h
-Build Time Elapsed:  00:00:02
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device\Source\ARM\startup_stm32f10x_md.s
+      Source file:   Device\Source\system_stm32f10x.c
+      Include file:  RTE_Driver\Config\RTE_Device.h
+      Source file:   Device\Source\ARM\STM32F1xx_OPT.s
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
