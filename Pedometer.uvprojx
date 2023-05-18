@@ -388,11 +388,6 @@
               <FilePath>.\main.c</FilePath>
             </File>
             <File>
-              <FileName>Init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Init.c</FilePath>
-            </File>
-            <File>
               <FileName>LED_IRQHandler.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\LED_IRQHandler.c</FilePath>
@@ -406,6 +401,31 @@
               <FileName>SysTick_Handler.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\SysTick_Handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>I2C.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\I2C.c</FilePath>
+            </File>
+            <File>
+              <FileName>I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>MPU6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MPU6050.c</FilePath>
+            </File>
+            <File>
+              <FileName>MPU6050.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\MPU6050.h</FilePath>
+            </File>
+            <File>
+              <FileName>Init_IO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Init_IO.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -8,3 +8,5 @@
 .\objects\main.o: D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h
 .\objects\main.o: D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h
 .\objects\main.o: D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h
+.\objects\main.o: I2C.h
+.\objects\main.o: MPU6050.h
