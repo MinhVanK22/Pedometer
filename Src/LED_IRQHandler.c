@@ -1,10 +1,10 @@
 #include "stm32f10x.h"                  // Device header
 
 uint32_t volatile State = 0;
-uint8_t volatile resetLCD = 0;
-extern unsigned int stepCount;
+uint8_t volatile resetLCD = 0, enableCouter = 0;
+extern uint16_t stepCount;
 
-//Ham Toggle pin output 
+//Ham toggle pin output 
 void GPIO_TogglePIN(GPIO_TypeDef *GPIOx, uint16_t PIN) {
 		GPIOx->ODR ^= (1u << PIN);
 }
@@ -13,6 +13,7 @@ void GPIO_TogglePIN(GPIO_TypeDef *GPIOx, uint16_t PIN) {
 void EXTI9_5_IRQHandler(void) {
 	if((GPIOA->IDR & (1u<<8)) == 0) {
 		State++;
+		enableCouter = 1;
 		
 		for(int i = 0; i < 3000000; i++);
 		EXTI->PR |= EXTI_PR_PR8;

@@ -1,5 +1,9 @@
 #include "MPU6050.h"
 #include "I2C.h"
+#include "CLCD_I2C.h"
+#include <stdio.h>
+
+extern CLCD_I2C_Name LCD1;
 
 int16_t Accel_X_RAW = 0;
 int16_t Accel_Y_RAW = 0;
@@ -7,8 +11,13 @@ int16_t Accel_Z_RAW = 0;
 int16_t Gyro_X_RAW = 0;
 int16_t Gyro_Y_RAW = 0;
 int16_t Gyro_Z_RAW = 0;
+
+#define WINDOW_SIZE 5
+#define threshold 1.06
+uint16_t stepCount = 0, thresholdCount = 0;
 double curAccelZ = 0, preAccelZ = 0;
-unsigned int thresholdCount = 0, stepCount = 0;
+double dataAccelZ[WINDOW_SIZE] = {0};
+uint16_t curIndex = 0, preIndex = WINDOW_SIZE - 1;
 
 void MPU_Write (uint8_t Address, uint8_t Reg, uint8_t Data)
 {
@@ -76,7 +85,7 @@ double MPU6050_Read_AccelX(void)
 	     I have configured FS_SEL = 0. So I am dividing by 16384.0
 	     for more details check ACCEL_CONFIG Register              ****/
 
-	return Accel_X_RAW/16384.0 * 10;
+	return Accel_X_RAW/16384.0;
 }
 
 double MPU6050_Read_AccelY(void)
@@ -94,7 +103,7 @@ double MPU6050_Read_AccelY(void)
 	     I have configured FS_SEL = 0. So I am dividing by 16384.0
 	     for more details check ACCEL_CONFIG Register              ****/
 
-	return Accel_Y_RAW/16384.0 * 10;
+	return Accel_Y_RAW/16384.0;
 }
 
 double MPU6050_Read_AccelZ(void)
@@ -112,7 +121,7 @@ double MPU6050_Read_AccelZ(void)
 	     I have configured FS_SEL = 0. So I am dividing by 16384.0
 	     for more details check ACCEL_CONFIG Register              ****/
 
-	return Accel_Z_RAW/16384.0 * 10;
+	return Accel_Z_RAW/16384.0;
 }
 
 double MPU6050_Read_GyroX(void)
@@ -171,17 +180,41 @@ double MPU6050_Read_GyroZ(void)
 
 int MPU6050_Counter(void) 
 {
+	char buf[4];
 	curAccelZ = MPU6050_Read_AccelZ();
 	
-	if(__fabs(curAccelZ - preAccelZ) > 0.8)
-		thresholdCount++;
+	dataAccelZ[curIndex] = curAccelZ;
+	curIndex = (curIndex + 1) % WINDOW_SIZE;
 	
-	if(thresholdCount > 3) {
-		stepCount++;
-		thresholdCount = 0;
+	double filterAccelZ = 0;
+  for(int i = 0; i < WINDOW_SIZE; i++) {
+     filterAccelZ += dataAccelZ[i];
+  }
+  filterAccelZ /= WINDOW_SIZE;
+	
+	preAccelZ = dataAccelZ[preIndex];
+	if(filterAccelZ > threshold && curAccelZ > preAccelZ) {
+		thresholdCount++;
 	}
 	
-	preAccelZ = curAccelZ;
+	if(thresholdCount > 2) {
+		stepCount++; //Dem buoc chan
+		
+		//In so buoc chan ra man hinh
+		CLCD_I2C_SetCursor(&LCD1,2,0);
+		CLCD_I2C_WriteString(&LCD1, "So buoc chan");
+		sprintf(buf, "%d", stepCount);
+		CLCD_I2C_SetCursor(&LCD1,6,1);
+		CLCD_I2C_WriteString(&LCD1, buf);
+		
+		thresholdCount = 0; //Dat lai so lan vuot nguong
+	}
+	
+	if(curIndex == 0) {
+		preIndex = WINDOW_SIZE - 1;
+	} else {
+		preIndex = curIndex - 1;
+	}
 	
 	return stepCount;
 }

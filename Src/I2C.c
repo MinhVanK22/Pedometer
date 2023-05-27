@@ -11,7 +11,7 @@ void I2C_Init(void) {
 	GPIOB->CRL |= GPIO_CRL_CNF6 | GPIO_CRL_CNF7;
 	
 	//Thiet lap I2C1
-	I2C1->CR1 |= I2C_CR1_SWRST;  // Reset the I2C
+	I2C1->CR1 |= I2C_CR1_SWRST;  // Reset I2C
 	I2C1->CR1 &= ~I2C_CR1_SWRST;  // Normal operation
 	I2C1->CR2 |= 0x08; //Peripheral clock frequency 8MHz
 	I2C1->CCR |= 0x28; //Generate a 100 kHz SCL frequency

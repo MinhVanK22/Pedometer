@@ -11,6 +11,7 @@ void SysTick_Handler(void) {
 
 //Ham tao tre ms
 void DelayMs(uint32_t TICK) {
-	while(msTicks < TICK);
+	uint32_t temp = msTicks;
+	while(msTicks < TICK + temp);
 	msTicks = 0;
 }

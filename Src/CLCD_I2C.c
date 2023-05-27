@@ -2,16 +2,18 @@
 #include "Pedometer.h"
 #include "I2C.h"
 
+/* Ham truyen du lieu qua giao thuc I2C */
 void LCD_WriteI2C(uint8_t Address, uint8_t *Data, int size)
 {
 	I2C_Start ();
 	I2C_Address (Address);
-	for (int i=0; i<size; i++) {
+	for (int i = 0; i < size; i++) {
 		I2C_Write (*Data++);
 	}
 	I2C_Stop ();
 }
 
+/* Ham viet lenh hoac du lieu vao LCD */
 static void CLCD_Write(CLCD_I2C_Name* LCD, uint8_t Data, uint8_t Mode)
 {
 	char Data_H;
@@ -43,7 +45,7 @@ static void CLCD_Write(CLCD_I2C_Name* LCD, uint8_t Data, uint8_t Mode)
 	Data_I2C[2] = Data_L | LCD_EN;
 	DelayMs(1);
 	Data_I2C[3] = Data_L;
-	LCD_WriteI2C (SLAVE_ADDRESS_LCD, (uint8_t *) Data_I2C, 4);
+	LCD_WriteI2C(SLAVE_ADDRESS_LCD, (uint8_t *) Data_I2C, 4);
 }
 
 
@@ -54,12 +56,11 @@ void CLCD_I2C_Init(CLCD_I2C_Name* LCD, uint8_t Address, uint8_t Colums, uint8_t 
 	LCD->ROWS = Rows;
 	
 	LCD->FUNCTIONSET = LCD_FUNCTIONSET | LCD_4BITMODE | LCD_2LINE | LCD_5x8DOTS; //Chon che do 4 bit, 2 dong và 5x8 dots
-	//LCD->ENTRYMODE = LCD_ENTRYMODESET | LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT; //Man hinh dich phai
 	LCD->DISPLAYCTRL = LCD_DISPLAYCONTROL | LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKOFF; //Bat man hinh, tat hien thi con tro va tat blink
 	LCD->CURSORSHIFT = LCD_CURSORSHIFT | LCD_CURSORMOVE | LCD_MOVERIGHT; //Dat con tro o che do dich sang phai
 	LCD->BACKLIGHT = LCD_BACKLIGHT;
 
-	DelayMs(30);
+	DelayMs(30);  // Initialization sequence
 	CLCD_Write(LCD, 0x30, CLCD_COMMAND);
   DelayMs(5);
 	CLCD_Write(LCD, 0x30, CLCD_COMMAND);
@@ -70,7 +71,6 @@ void CLCD_I2C_Init(CLCD_I2C_Name* LCD, uint8_t Address, uint8_t Colums, uint8_t 
 	DelayMs(1);
 	
 	CLCD_Write(LCD, LCD->FUNCTIONSET, CLCD_COMMAND);
-	//CLCD_Write(LCD, LCD->ENTRYMODE, CLCD_COMMAND);
 	CLCD_Write(LCD, LCD->DISPLAYCTRL, CLCD_COMMAND);
 	CLCD_Write(LCD, LCD->CURSORSHIFT, CLCD_COMMAND);
 	

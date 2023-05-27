@@ -403,11 +403,6 @@
               <FilePath>.\Src\I2C.h</FilePath>
             </File>
             <File>
-              <FileName>Init_IO.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Src\Init_IO.c</FilePath>
-            </File>
-            <File>
               <FileName>LED_IRQHandler.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\LED_IRQHandler.c</FilePath>
@@ -436,6 +431,16 @@
               <FileName>SysTick_Handler.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Src\SysTick_Handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>TIM2_IRQHandler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\TIM2_IRQHandler.c</FilePath>
+            </File>
+            <File>
+              <FileName>Init_IO&amp;Timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\Init_IO&amp;Timer.c</FilePath>
             </File>
           </Files>
         </Group>
