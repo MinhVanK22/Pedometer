@@ -19,8 +19,8 @@
 #define WHO_AM_I_REG 0x75
 
 void MPU6050_Init(void);
-void MPU_Write (uint8_t Address, uint8_t Reg, uint8_t Data);
-void MPU_Read (uint8_t Address, uint8_t Reg, uint8_t *buffer, uint8_t size);
+void MPU_Write(uint8_t Address, uint8_t Reg, uint8_t Data);
+void MPU_Read(uint8_t Address, uint8_t Reg, uint8_t *buffer, uint8_t size);
 double MPU6050_Read_AccelX(void);
 double MPU6050_Read_AccelY(void);
 double MPU6050_Read_AccelZ(void);

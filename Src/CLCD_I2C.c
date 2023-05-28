@@ -40,10 +40,10 @@ static void CLCD_Write(CLCD_I2C_Name* LCD, uint8_t Data, uint8_t Mode)
 	}
 	
 	Data_I2C[0] = Data_H | LCD_EN;
-	DelayMs(1);
+	DelayMs(2);
 	Data_I2C[1] = Data_H;
 	Data_I2C[2] = Data_L | LCD_EN;
-	DelayMs(1);
+	DelayMs(2);
 	Data_I2C[3] = Data_L;
 	LCD_WriteI2C(SLAVE_ADDRESS_LCD, (uint8_t *) Data_I2C, 4);
 }

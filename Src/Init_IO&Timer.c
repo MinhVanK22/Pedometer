@@ -11,16 +11,16 @@ void Init_IO(void) {
 	
 	//Chon chan A8 la input
 	GPIOA->CRH &= ~GPIO_CRH_CNF8;
-	GPIOA->CRH |= GPIO_CRH_CNF8_1;
-	GPIOA->ODR |= (1u<<8); //pull up
+	GPIOA->CRH |= GPIO_CRH_CNF8_1; //Input with pull up or pull down
+	GPIOA->ODR |= (1u<<8); //Select pull up
 	
 	//Chon chan A9 la input
 	GPIOA->CRH &= ~GPIO_CRH_CNF9;
-	GPIOA->CRH |= GPIO_CRH_CNF9_1;
-	GPIOA->ODR |= (1u<<9); //pull up
+	GPIOA->CRH |= GPIO_CRH_CNF9_1; //Input with pull up or pull down
+	GPIOA->ODR |= (1u<<9); //Select pull up
 	
 	/* Init interrupt line 8 and line 9 */
-	EXTI->IMR |= EXTI_IMR_MR8 | EXTI_IMR_MR9; //Ngat enable line 8 va 9
+	EXTI->IMR |= EXTI_IMR_MR8 | EXTI_IMR_MR9; //Ngat enable o line 8 va 9
 	EXTI->FTSR |= EXTI_FTSR_TR8 | EXTI_FTSR_TR9; //Chon ngat suon giam o line 8 va 9
 	NVIC_SetPriority(EXTI9_5_IRQn,8);
 	NVIC_ClearPendingIRQ(EXTI9_5_IRQn);
@@ -37,9 +37,9 @@ void Init_Timer(void) {
 	NVIC_SetPriority(SysTick_IRQn,6);
 	
 	/* Init TIM2 */
-	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;  // Enable clock TIM2
-  TIM2->CR1 |= TIM_CR1_CEN | TIM_CR1_ARPE; 	// Enable counter, auto reload
-	TIM2->DIER |= TIM_DIER_UIE;  // Enable TIM2 interrupt
+	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;  //Enable clock TIM2
+  TIM2->CR1 |= TIM_CR1_CEN | TIM_CR1_ARPE; 	//Enable counter, auto reload
+	TIM2->DIER |= TIM_DIER_UIE;  //Enable TIM2 interrupt
 	TIM2->PSC = 6000 - 1;
   TIM2->ARR = 300 - 1;
 	NVIC_SetPriority(TIM2_IRQn,7);

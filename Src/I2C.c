@@ -12,9 +12,10 @@ void I2C_Init(void) {
 	
 	//Thiet lap I2C1
 	I2C1->CR1 |= I2C_CR1_SWRST;  // Reset I2C
-	I2C1->CR1 &= ~I2C_CR1_SWRST;  // Normal operation
+	I2C1->CR1 &= ~I2C_CR1_SWRST;
+	
 	I2C1->CR2 |= 0x08; //Peripheral clock frequency 8MHz
-	I2C1->CCR |= 0x28; //Generate a 100 kHz SCL frequency
+	I2C1->CCR |= 0x28; //Generate 100 KHz SCL frequency
 	I2C1->TRISE = 0x9;
 	I2C1->CR1 |= I2C_CR1_PE; // Enable I2C
 	
@@ -22,7 +23,7 @@ void I2C_Init(void) {
 
 void I2C_Start(void) {
 	I2C1->CR1 |= I2C_CR1_ACK;  // Enable the ACK
-	I2C1->CR1 |= I2C_CR1_START; //Generate START
+	I2C1->CR1 |= I2C_CR1_START; // Generate START
 	while(!(I2C1->SR1 & I2C_SR1_SB)); //Wait for SB bit to set
 }
 
@@ -34,52 +35,52 @@ void I2C_Write(uint8_t data) {
 
 void I2C_Address(uint8_t address) {
 	I2C1->DR = address;  // Send the address
-  while (!(I2C1->SR1 & (1u<<1)));  // Wait for ADDR bit to set
+  while(!(I2C1->SR1 & (1u<<1)));  // Wait for ADDR bit to set
   uint8_t temp = I2C1->SR1 | I2C1->SR2;  // Read SR1 and SR2 to clear the ADDR bit
 }
 
 void I2C_Read(uint8_t address, uint8_t *buffer, uint8_t size) {
 	uint8_t remaining = size;
 	
-/**** STEP 1 ****/	
+	/* STEP 1: Read only 1 byte */	
 	if(size == 1)
 	{
-		/**** STEP 1-a ****/	
-		I2C1->DR = address;  //  Send the address
+		/* STEP 1-a */	
+		I2C1->DR = address;  // Send the address
 		while (!(I2C1->SR1 & (1u<<1)));  // Wait for ADDR bit to set
 		
-		/**** STEP 1-b ****/	
+		/* STEP 1-b */	
 		I2C1->CR1 &= ~I2C_CR1_ACK;  // Clear the ACK bit 
-		uint8_t temp = I2C1->SR1 | I2C1->SR2;  // Read SR1 and SR2 to clear the ADDR bit.... EV6 condition
+		uint8_t temp = I2C1->SR1 | I2C1->SR2;  // Read SR1 and SR2 to clear the ADDR bit
 		I2C1->CR1 |= I2C_CR1_STOP;  // Stop I2C
 
-		/**** STEP 1-c ****/	
+		/* STEP 1-c */	
 		while (!(I2C1->SR1 & (1u<<6)));  // Wait for RxNE to set
 		
-		/**** STEP 1-d ****/	
+		/* STEP 1-d */	
 		buffer[size-remaining] = I2C1->DR;  // Read the data from the DATA REGISTER
 		
 	}
 
-/**** STEP 2 ****/		
+	/* STEP 2: Read multiple byte */		
 	else 
 	{
-		/**** STEP 2-a ****/
+		/* STEP 2-a */
 		I2C1->DR = address;  // Send the address
 		while (!(I2C1->SR1 & (1u<<1)));  // Wait for ADDR bit to set
 		
-		/**** STEP 2-b ****/
+		/* STEP 2-b */
 		uint8_t temp = I2C1->SR1 | I2C1->SR2;  // Read SR1 and SR2 to clear the ADDR bit
 		
 		while (remaining > 2)
 		{
-			/**** STEP 2-c ****/
+			/* STEP 2-c */
 			while (!(I2C1->SR1 & (1u<<6)));  // Wait for RxNE to set
 			
-			/**** STEP 2-d ****/
-			buffer[size-remaining] = I2C1->DR;  // copy the data into the buffer			
+			/* STEP 2-d */
+			buffer[size-remaining] = I2C1->DR;  // Copy the data into the buffer			
 			
-			/**** STEP 2-e ****/
+			/* STEP 2-e */
 			I2C1->CR1 |= I2C_CR1_ACK;  // Set the ACK bit to Acknowledge the data received
 			
 			remaining--;
@@ -89,20 +90,20 @@ void I2C_Read(uint8_t address, uint8_t *buffer, uint8_t size) {
 		while (!(I2C1->SR1 & (1u<<6)));  // Wait for RxNE to set
 		buffer[size-remaining] = I2C1->DR;
 		
-		/**** STEP 2-f ****/
+		/* STEP 2-f */
 		I2C1->CR1 &= ~I2C_CR1_ACK;  // Clear the ACK bit 
 		
-		/**** STEP 2-g ****/
+		/* STEP 2-g */
 		I2C1->CR1 |= I2C_CR1_STOP;  // Stop I2C
 		
 		remaining--;
 		
 		// Read the Last BYTE
 		while (!(I2C1->SR1 & (1u<<6)));  // Wait for RxNE to set
-		buffer[size-remaining] = I2C1->DR;  // copy the data into the buffer
+		buffer[size-remaining] = I2C1->DR;  // Copy the data into the buffer
 	}
 }
 
 void I2C_Stop(void) {
-	I2C1->CR1 |= I2C_CR1_STOP; //Generate STOP
+	I2C1->CR1 |= I2C_CR1_STOP; // Generate STOP
 }

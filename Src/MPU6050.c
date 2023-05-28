@@ -14,10 +14,11 @@ int16_t Gyro_Z_RAW = 0;
 
 #define WINDOW_SIZE 5
 #define threshold 1.06
-uint16_t stepCount = 0, thresholdCount = 0;
+uint16_t stepCount = 0;
+uint8_t thresholdCount = 0;
 double curAccelZ = 0, preAccelZ = 0;
-double dataAccelZ[WINDOW_SIZE] = {0};
-uint16_t curIndex = 0, preIndex = WINDOW_SIZE - 1;
+double dataAccelZ[WINDOW_SIZE] = {};
+uint8_t curIndex = 0, preIndex = WINDOW_SIZE - 1;
 
 void MPU_Write (uint8_t Address, uint8_t Reg, uint8_t Data)
 {
@@ -33,7 +34,7 @@ void MPU_Read (uint8_t Address, uint8_t Reg, uint8_t *buffer, uint8_t size)
 	I2C_Start ();
 	I2C_Address (Address);
 	I2C_Write (Reg);
-	I2C_Start ();  // repeated start
+	I2C_Start ();  // Repeated start
 	I2C_Read (Address+0x01, buffer, size);
 	I2C_Stop ();
 }
@@ -43,13 +44,12 @@ void MPU6050_Init (void)
 	uint8_t check;
 	uint8_t Data;
 
-	// check device ID WHO_AM_I
-
+	// Check device
 	MPU_Read (MPU6050_ADDR, WHO_AM_I_REG, &check, 1);
 
 	if (check == 104)  // 0x68 will be returned by the sensor if everything goes well
 	{
-		// power management register 0X6B we should write all 0's to wake the sensor up
+		// Power management register 0X6B we should write all 0's to wake the sensor up
 		Data = 0;
 		MPU_Write (MPU6050_ADDR, PWR_MGMT_1_REG, Data);
 
@@ -75,17 +75,11 @@ double MPU6050_Read_AccelX(void)
 	uint8_t Rec_Data[2];
 
 	// Read 2 BYTES of data starting from ACCEL_XOUT_H register
-
 	MPU_Read (MPU6050_ADDR, ACCEL_XOUT_H_REG, Rec_Data, 2);
 
 	Accel_X_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
-	
-	/*** convert the RAW values into acceleration in 'g'
-	     we have to divide according to the Full scale value set in FS_SEL
-	     I have configured FS_SEL = 0. So I am dividing by 16384.0
-	     for more details check ACCEL_CONFIG Register              ****/
 
-	return Accel_X_RAW/16384.0;
+	return Accel_X_RAW/16384.0; // Chuyen doi tu RAW value thanh gia tri gia toc(g): (Accel_X_RAW / Sensitivity)
 }
 
 double MPU6050_Read_AccelY(void)
@@ -93,17 +87,11 @@ double MPU6050_Read_AccelY(void)
 	uint8_t Rec_Data[2];
 
 	// Read 2 BYTES of data starting from ACCEL_YOUT_H register
-
 	MPU_Read (MPU6050_ADDR, ACCEL_YOUT_H_REG, Rec_Data, 2);
 
 	Accel_Y_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
 
-	/*** convert the RAW values into acceleration in 'g'
-	     we have to divide according to the Full scale value set in FS_SEL
-	     I have configured FS_SEL = 0. So I am dividing by 16384.0
-	     for more details check ACCEL_CONFIG Register              ****/
-
-	return Accel_Y_RAW/16384.0;
+	return Accel_Y_RAW/16384.0; // Chuyen doi tu RAW value thanh gia tri gia toc(g): (Accel_Y_RAW / Sensitivity)
 }
 
 double MPU6050_Read_AccelZ(void)
@@ -111,17 +99,11 @@ double MPU6050_Read_AccelZ(void)
 	uint8_t Rec_Data[2];
 
 	// Read 2 BYTES of data starting from ACCEL_ZOUT_H register
-
 	MPU_Read (MPU6050_ADDR, ACCEL_ZOUT_H_REG, Rec_Data, 2);
 
 	Accel_Z_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
 
-	/*** convert the RAW values into acceleration in 'g'
-	     we have to divide according to the Full scale value set in FS_SEL
-	     I have configured FS_SEL = 0. So I am dividing by 16384.0
-	     for more details check ACCEL_CONFIG Register              ****/
-
-	return Accel_Z_RAW/16384.0;
+	return Accel_Z_RAW/16384.0; // Chuyen doi tu RAW value thanh gia tri gia toc(g): (Accel_Z_RAW / Sensitivity)
 }
 
 double MPU6050_Read_GyroX(void)
@@ -129,17 +111,11 @@ double MPU6050_Read_GyroX(void)
 	uint8_t Rec_Data[2];
 
 	// Read 2 BYTES of data starting from GYRO_XOUT_H register
-
 	MPU_Read (MPU6050_ADDR, GYRO_XOUT_H_REG, Rec_Data, 2);
 
 	Gyro_X_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
 
-	/*** convert the RAW values into dps (°/s)
-	     we have to divide according to the Full scale value set in FS_SEL
-	     I have configured FS_SEL = 0. So I am dividing by 131.0
-	     for more details check GYRO_CONFIG Register              ****/
-
-	return Gyro_X_RAW/131.0;
+	return Gyro_X_RAW/131.0; // Chuyen doi tu RAW value thanh gia tri dsp (°/s): (Gyro_X_RAW / Sensitivity)
 }
 
 double MPU6050_Read_GyroY(void)
@@ -147,17 +123,11 @@ double MPU6050_Read_GyroY(void)
 	uint8_t Rec_Data[2];
 
 	// Read 2 BYTES of data starting from GYRO_YOUT_H register
-
 	MPU_Read (MPU6050_ADDR, GYRO_YOUT_H_REG, Rec_Data, 2);
 
 	Gyro_Y_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
 
-	/*** convert the RAW values into dps (°/s)
-	     we have to divide according to the Full scale value set in FS_SEL
-	     I have configured FS_SEL = 0. So I am dividing by 131.0
-	     for more details check GYRO_CONFIG Register              ****/
-
-	return Gyro_Y_RAW/131.0;
+	return Gyro_Y_RAW/131.0; // Chuyen doi tu RAW value thanh gia tri dsp (°/s): (Gyro_Y_RAW / Sensitivity)
 }
 
 double MPU6050_Read_GyroZ(void)
@@ -165,19 +135,14 @@ double MPU6050_Read_GyroZ(void)
 	uint8_t Rec_Data[2];
 
 	// Read 2 BYTES of data starting from GYRO_ZOUT_H register
-
 	MPU_Read (MPU6050_ADDR, GYRO_ZOUT_H_REG, Rec_Data, 2);
 
 	Gyro_Z_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
 
-	/*** convert the RAW values into dps (°/s)
-	     we have to divide according to the Full scale value set in FS_SEL
-	     I have configured FS_SEL = 0. So I am dividing by 131.0
-	     for more details check GYRO_CONFIG Register              ****/
-
-	return Gyro_Z_RAW/131.0;
+	return Gyro_Z_RAW/131.0; // Chuyen doi tu RAW value thanh gia tri dsp (°/s): (Gyro_Z_RAW / Sensitivity)
 }
 
+// Ham dem buoc chan
 int MPU6050_Counter(void) 
 {
 	char buf[4];
