@@ -26,20 +26,20 @@ int main(void) {
 	while(1) {		
 		/* Trang thai bo dem hoat dong */
 		if(State % 2 == 0) {
+			TIM2->CR1 |= TIM_CR1_CEN;  //Dem buoc chan hoat dong
+			
 			GPIOA->ODR &= ~(1u<<6); //Tat led do
 			
 			if(LedTicks >= 1000) {
 				GPIO_TogglePIN(GPIOC, 13); //Nhay led xanh tan so 1Hz
 				LedTicks = 0;
 			}
-			
-			TIM2->CR1 |= TIM_CR1_CEN;  //Dem buoc chan hoat dong
 		}
 		/* Trang thai bo dem khong hoat dong */
 		else {
+			TIM2->CR1 &= ~TIM_CR1_CEN; //Dung dem buoc chan
 			GPIOC->ODR |= (1u<<13); //Tat led xanh
 			GPIOA->ODR |= (1u<<6);  //Bat led do
-			TIM2->CR1 &= ~TIM_CR1_CEN; //Dung dem buoc chan
 		}
 	}
 }

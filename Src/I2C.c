@@ -14,9 +14,9 @@ void I2C_Init(void) {
 	I2C1->CR1 |= I2C_CR1_SWRST;  // Reset I2C
 	I2C1->CR1 &= ~I2C_CR1_SWRST;
 	
-	I2C1->CR2 |= 0x08; //Peripheral clock frequency 8MHz
-	I2C1->CCR |= 0x28; //Generate 100 KHz SCL frequency
-	I2C1->TRISE = 0x9;
+	I2C1->CR2 |= 0x08; // Peripheral clock frequency 8MHz
+	I2C1->CCR |= 0x28; // Generate 100 KHz SCL frequency
+	I2C1->TRISE = 0x9; // Transition time between transmit and receive
 	I2C1->CR1 |= I2C_CR1_PE; // Enable I2C
 	
 }

@@ -19,8 +19,8 @@ static void CLCD_Write(CLCD_I2C_Name* LCD, uint8_t Data, uint8_t Mode)
 	char Data_H;
 	char Data_L;
 	uint8_t Data_I2C[4];
-	Data_H = Data & 0xF0;
-	Data_L = (Data<<4) & 0xF0;
+	Data_H = Data & 0xF0; //4 bit cao
+	Data_L = (Data<<4) & 0xF0; //4 bit thap
 	
 	if(LCD->BACKLIGHT)
 	{
@@ -90,6 +90,7 @@ void CLCD_I2C_SetCursor(CLCD_I2C_Name* LCD, uint8_t Xpos, uint8_t Ypos)
 	{
 		Ypos = LCD->ROWS - 1;
 	}
+	
 	if(Ypos == 0)
 	{
 		DRAM_ADDRESS = 0x00 + Xpos;
@@ -98,14 +99,7 @@ void CLCD_I2C_SetCursor(CLCD_I2C_Name* LCD, uint8_t Xpos, uint8_t Ypos)
 	{
 		DRAM_ADDRESS = 0x40 + Xpos;
 	}
-	else if(Ypos == 2)
-	{
-		DRAM_ADDRESS = 0x14 + Xpos;
-	}
-	else if(Ypos == 3)
-	{
-		DRAM_ADDRESS = 0x54 + Xpos;
-	}
+	
 	CLCD_Write(LCD, LCD_SETDDRAMADDR | DRAM_ADDRESS, CLCD_COMMAND);
 }
 
@@ -116,7 +110,7 @@ void CLCD_I2C_WriteChar(CLCD_I2C_Name* LCD, char character)
 
 void CLCD_I2C_WriteString(CLCD_I2C_Name* LCD, char *String)
 {
-	while(*String)CLCD_I2C_WriteChar(LCD, *String++);
+	while(*String) CLCD_I2C_WriteChar(LCD, *String++);
 }
 
 void CLCD_I2C_Clear(CLCD_I2C_Name* LCD)

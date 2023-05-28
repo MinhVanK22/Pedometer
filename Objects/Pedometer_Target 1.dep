@@ -1,6 +1,6 @@
 Dependencies for Project 'Pedometer', Target 'Target 1': (DO NOT MODIFY !)
-F (.\Src\CLCD_I2C.c)(0x6472BA80)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\clcd_i2c.o --omf_browse .\objects\clcd_i2c.crf --depend .\objects\clcd_i2c.d)
-I (Src\CLCD_I2C.h)(0x6467345A)
+F (.\Src\CLCD_I2C.c)(0x647332F0)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\clcd_i2c.o --omf_browse .\objects\clcd_i2c.crf --depend .\objects\clcd_i2c.d)
+I (Src\CLCD_I2C.h)(0x64731CB8)
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h)(0x61AD876E)
 I (.\RTE\_Target_1\RTE_Components.h)(0x645E32A9)
 I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x626F58EE)
@@ -11,8 +11,8 @@ I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626F5
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h)(0x61AD876E)
 I (Src\Pedometer.h)(0x646F3911)
 I (Src\I2C.h)(0x64650DCB)
-F (.\Src\CLCD_I2C.h)(0x6467345A)()
-F (.\Src\I2C.c)(0x6472DB68)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\i2c.o --omf_browse .\objects\i2c.crf --depend .\objects\i2c.d)
+F (.\Src\CLCD_I2C.h)(0x64731CB8)()
+F (.\Src\I2C.c)(0x64731968)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\i2c.o --omf_browse .\objects\i2c.crf --depend .\objects\i2c.d)
 I (Src\I2C.h)(0x64650DCB)
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h)(0x61AD876E)
 I (.\RTE\_Target_1\RTE_Components.h)(0x645E32A9)
@@ -32,8 +32,8 @@ I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626
 I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626F58EE)
 I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626F58EE)
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h)(0x61AD876E)
-I (Src\CLCD_I2C.h)(0x6467345A)
-F (.\Src\main.c)(0x6472CB87)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (Src\CLCD_I2C.h)(0x64731CB8)
+F (.\Src\main.c)(0x64731ACE)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (Src\Pedometer.h)(0x646F3911)
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h)(0x61AD876E)
 I (.\RTE\_Target_1\RTE_Components.h)(0x645E32A9)
@@ -45,9 +45,9 @@ I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626F5
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h)(0x61AD876E)
 I (Src\I2C.h)(0x64650DCB)
 I (Src\MPU6050.h)(0x6472CE67)
-I (Src\CLCD_I2C.h)(0x6467345A)
+I (Src\CLCD_I2C.h)(0x64731CB8)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EE94C)
-F (.\Src\MPU6050.c)(0x6472D492)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\mpu6050.o --omf_browse .\objects\mpu6050.crf --depend .\objects\mpu6050.d)
+F (.\Src\MPU6050.c)(0x64731ED8)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103C8-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F10X_MD-o .\objects\mpu6050.o --omf_browse .\objects\mpu6050.crf --depend .\objects\mpu6050.d)
 I (Src\MPU6050.h)(0x6472CE67)
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\stm32f10x.h)(0x61AD876E)
 I (.\RTE\_Target_1\RTE_Components.h)(0x645E32A9)
@@ -58,7 +58,7 @@ I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x62
 I (D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armcc.h)(0x626F58EE)
 I (D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include\system_stm32f10x.h)(0x61AD876E)
 I (Src\I2C.h)(0x64650DCB)
-I (Src\CLCD_I2C.h)(0x6467345A)
+I (Src\CLCD_I2C.h)(0x64731CB8)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599EE94C)
 F (.\Src\MPU6050.h)(0x6472CE67)()
 F (.\Src\Pedometer.h)(0x646F3911)()
