@@ -7,5 +7,4 @@ void Init_IO(void);
 void Init_Timer(void);
 void DelayMs(uint32_t TICK);
 void GPIO_TogglePIN(GPIO_TypeDef *GPIOx, uint16_t PIN);
-
 #endif
