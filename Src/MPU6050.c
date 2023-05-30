@@ -13,7 +13,7 @@ int16_t Gyro_Y_RAW = 0;
 int16_t Gyro_Z_RAW = 0;
 
 #define WINDOW_SIZE 5
-#define threshold 1.06
+#define threshold 1.05
 uint16_t stepCount = 0;
 uint8_t thresholdCount = 0;
 double curAccelZ = 0, preAccelZ = 0;
@@ -158,11 +158,11 @@ int MPU6050_Counter(void)
   filterAccelZ /= WINDOW_SIZE;
 	
 	preAccelZ = dataAccelZ[preIndex];
-	if(filterAccelZ > threshold && curAccelZ > preAccelZ) {
-		thresholdCount++;
+	if(filterAccelZ > threshold && curAccelZ > preAccelZ && filterAccelZ < preAccelZ) {
+		thresholdCount = 1;
 	}
 	
-	if(thresholdCount > 2) {
+	if(thresholdCount == 1) {
 		stepCount++; //Dem buoc chan
 		
 		//In so buoc chan ra man hinh
@@ -172,7 +172,7 @@ int MPU6050_Counter(void)
 		CLCD_I2C_SetCursor(&LCD1,6,1);
 		CLCD_I2C_WriteString(&LCD1, buf);
 		
-		thresholdCount = 0; //Dat lai so lan vuot nguong
+		thresholdCount = 0;
 	}
 	
 	if(curIndex == 0) {
