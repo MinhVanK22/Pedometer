@@ -32,8 +32,8 @@ void Init_IO(void) {
 
 void Init_Timer(void) {
 	/* Init SysTick timer */
-	SysTick->LOAD = SystemCoreClock / 1000;
-	SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk;
+	SysTick->LOAD = SystemCoreClock / 1000; //Dem trong 1ms
+	SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk; //0x7
 	NVIC_SetPriority(SysTick_IRQn,6);
 	
 	/* Init TIM2 */
