@@ -24,7 +24,7 @@ void I2C_Init(void) {
 void I2C_Start(void) {
 	I2C1->CR1 |= I2C_CR1_ACK;  // Enable the ACK
 	I2C1->CR1 |= I2C_CR1_START; // Generate START
-	while(!(I2C1->SR1 & I2C_SR1_SB)); //Wait for SB bit to set
+	while(!(I2C1->SR1 & I2C_SR1_SB)); // Wait for SB bit to set
 }
 
 void I2C_Write(uint8_t data) {
@@ -45,19 +45,15 @@ void I2C_Read(uint8_t address, uint8_t *buffer, uint8_t size) {
 	/* STEP 1: Read only 1 byte */	
 	if(size == 1)
 	{
-		/* STEP 1-a */	
 		I2C1->DR = address;  // Send the address
 		while (!(I2C1->SR1 & (1u<<1)));  // Wait for ADDR bit to set
 		
-		/* STEP 1-b */	
 		I2C1->CR1 &= ~I2C_CR1_ACK;  // Clear the ACK bit 
 		uint8_t temp = I2C1->SR1 | I2C1->SR2;  // Read SR1 and SR2 to clear the ADDR bit
 		I2C1->CR1 |= I2C_CR1_STOP;  // Stop I2C
 
-		/* STEP 1-c */	
 		while (!(I2C1->SR1 & (1u<<6)));  // Wait for RxNE to set
-		
-		/* STEP 1-d */	
+			
 		buffer[size-remaining] = I2C1->DR;  // Read the data from the DATA REGISTER
 		
 	}
@@ -65,22 +61,16 @@ void I2C_Read(uint8_t address, uint8_t *buffer, uint8_t size) {
 	/* STEP 2: Read multiple byte */		
 	else 
 	{
-		/* STEP 2-a */
 		I2C1->DR = address;  // Send the address
 		while (!(I2C1->SR1 & (1u<<1)));  // Wait for ADDR bit to set
 		
-		/* STEP 2-b */
 		uint8_t temp = I2C1->SR1 | I2C1->SR2;  // Read SR1 and SR2 to clear the ADDR bit
 		
 		while (remaining > 2)
 		{
-			/* STEP 2-c */
 			while (!(I2C1->SR1 & (1u<<6)));  // Wait for RxNE to set
-			
-			/* STEP 2-d */
 			buffer[size-remaining] = I2C1->DR;  // Copy the data into the buffer			
 			
-			/* STEP 2-e */
 			I2C1->CR1 |= I2C_CR1_ACK;  // Set the ACK bit to Acknowledge the data received
 			
 			remaining--;
@@ -88,12 +78,10 @@ void I2C_Read(uint8_t address, uint8_t *buffer, uint8_t size) {
 		
 		// Read the SECOND LAST BYTE
 		while (!(I2C1->SR1 & (1u<<6)));  // Wait for RxNE to set
-		buffer[size-remaining] = I2C1->DR;
+		buffer[size-remaining] = I2C1->DR;  // Copy the data into the buffer
 		
-		/* STEP 2-f */
 		I2C1->CR1 &= ~I2C_CR1_ACK;  // Clear the ACK bit 
 		
-		/* STEP 2-g */
 		I2C1->CR1 |= I2C_CR1_STOP;  // Stop I2C
 		
 		remaining--;

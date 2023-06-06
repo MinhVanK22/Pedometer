@@ -16,10 +16,10 @@ int main(void) {
 	MPU6050_Init();
 	CLCD_I2C_Init(&LCD1,SLAVE_ADDRESS_LCD,16,2);
 	
-	//Man hinh o trang thai ban dau
+	//LCD trang thai ban dau
 	CLCD_I2C_Clear(&LCD1);
-	CLCD_I2C_SetCursor(&LCD1,2,0);
-	CLCD_I2C_WriteString(&LCD1, "So buoc chan");	
+	CLCD_I2C_SetCursor(&LCD1,1,0);
+	CLCD_I2C_WriteString(&LCD1, "_So buoc chan_");	
 	CLCD_I2C_SetCursor(&LCD1,6,1);
 	CLCD_I2C_WriteString(&LCD1, "0");
 	

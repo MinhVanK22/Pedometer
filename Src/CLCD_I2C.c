@@ -2,7 +2,7 @@
 #include "Pedometer.h"
 #include "I2C.h"
 
-/* Ham truyen du lieu qua giao thuc I2C */
+/* Ham truyen du lieu qua giao thuc I2C cua LCD */
 void LCD_WriteI2C(uint8_t Address, uint8_t *Data, int size)
 {
 	I2C_Start ();
@@ -74,7 +74,6 @@ void CLCD_I2C_Init(CLCD_I2C_Name* LCD, uint8_t Address, uint8_t Colums, uint8_t 
 	CLCD_Write(LCD, LCD->DISPLAYCTRL, CLCD_COMMAND);
 	CLCD_Write(LCD, LCD->CURSORSHIFT, CLCD_COMMAND);
 	
-	
 	CLCD_Write(LCD, LCD_CLEARDISPLAY, CLCD_COMMAND);
 	CLCD_Write(LCD, LCD_RETURNHOME, CLCD_COMMAND);
 }
@@ -116,5 +115,5 @@ void CLCD_I2C_WriteString(CLCD_I2C_Name* LCD, char *String)
 void CLCD_I2C_Clear(CLCD_I2C_Name* LCD)
 {
 	CLCD_Write(LCD, LCD_CLEARDISPLAY, CLCD_COMMAND);
-	DelayMs(5);
+	DelayMs(3);
 }

@@ -2,6 +2,8 @@
 ## Tên các thành viên:
 - Nguyễn Minh Văn - 20020739
 - Lục Văn Tuyên - 20020349
+##Demo
+![1](https://github.com/MinhVanK22/Pedometer/assets/108819897/e62d9085-6a84-4b3b-85e4-f33dbc3df10e)
 ## Thông tin sản phẩm:
 - Đặc điểm kỹ thuật chính:
 ```

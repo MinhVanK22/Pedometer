@@ -5,12 +5,7 @@
 
 extern CLCD_I2C_Name LCD1;
 
-int16_t Accel_X_RAW = 0;
-int16_t Accel_Y_RAW = 0;
 int16_t Accel_Z_RAW = 0;
-int16_t Gyro_X_RAW = 0;
-int16_t Gyro_Y_RAW = 0;
-int16_t Gyro_Z_RAW = 0;
 
 #define WINDOW_SIZE 5
 #define threshold 1.05
@@ -61,37 +56,8 @@ void MPU6050_Init (void)
 		// XA_ST=0,YA_ST=0,ZA_ST=0, FS_SEL=0 -> ± 2g
 		Data = 0x00;
 		MPU_Write(MPU6050_ADDR, ACCEL_CONFIG_REG, Data);
-
-		// Set Gyroscopic configuration in GYRO_CONFIG Register
-		// XG_ST=0,YG_ST=0,ZG_ST=0, FS_SEL=0 -> ± 250 °/s
-		Data = 0x00;
-		MPU_Write(MPU6050_ADDR, GYRO_CONFIG_REG, Data);
 	}
 
-}
-
-double MPU6050_Read_AccelX(void)
-{
-	uint8_t Rec_Data[2];
-
-	// Read 2 BYTES of data starting from ACCEL_XOUT_H register
-	MPU_Read (MPU6050_ADDR, ACCEL_XOUT_H_REG, Rec_Data, 2);
-
-	Accel_X_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
-
-	return Accel_X_RAW/16384.0; // Chuyen doi tu RAW value thanh gia tri gia toc(g): (Accel_X_RAW / Sensitivity)
-}
-
-double MPU6050_Read_AccelY(void)
-{
-	uint8_t Rec_Data[2];
-
-	// Read 2 BYTES of data starting from ACCEL_YOUT_H register
-	MPU_Read (MPU6050_ADDR, ACCEL_YOUT_H_REG, Rec_Data, 2);
-
-	Accel_Y_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
-
-	return Accel_Y_RAW/16384.0; // Chuyen doi tu RAW value thanh gia tri gia toc(g): (Accel_Y_RAW / Sensitivity)
 }
 
 double MPU6050_Read_AccelZ(void)
@@ -104,42 +70,6 @@ double MPU6050_Read_AccelZ(void)
 	Accel_Z_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
 
 	return Accel_Z_RAW/16384.0; // Chuyen doi tu RAW value thanh gia tri gia toc(g): (Accel_Z_RAW / Sensitivity)
-}
-
-double MPU6050_Read_GyroX(void)
-{
-	uint8_t Rec_Data[2];
-
-	// Read 2 BYTES of data starting from GYRO_XOUT_H register
-	MPU_Read (MPU6050_ADDR, GYRO_XOUT_H_REG, Rec_Data, 2);
-
-	Gyro_X_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
-
-	return Gyro_X_RAW/131.0; // Chuyen doi tu RAW value thanh gia tri dsp (°/s): (Gyro_X_RAW / Sensitivity)
-}
-
-double MPU6050_Read_GyroY(void)
-{
-	uint8_t Rec_Data[2];
-
-	// Read 2 BYTES of data starting from GYRO_YOUT_H register
-	MPU_Read (MPU6050_ADDR, GYRO_YOUT_H_REG, Rec_Data, 2);
-
-	Gyro_Y_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
-
-	return Gyro_Y_RAW/131.0; // Chuyen doi tu RAW value thanh gia tri dsp (°/s): (Gyro_Y_RAW / Sensitivity)
-}
-
-double MPU6050_Read_GyroZ(void)
-{
-	uint8_t Rec_Data[2];
-
-	// Read 2 BYTES of data starting from GYRO_ZOUT_H register
-	MPU_Read (MPU6050_ADDR, GYRO_ZOUT_H_REG, Rec_Data, 2);
-
-	Gyro_Z_RAW = (int16_t)(Rec_Data[0] << 8 | Rec_Data [1]);
-
-	return Gyro_Z_RAW/131.0; // Chuyen doi tu RAW value thanh gia tri dsp (°/s): (Gyro_Z_RAW / Sensitivity)
 }
 
 // Ham dem buoc chan
@@ -159,15 +89,13 @@ int MPU6050_Counter(void)
 	
 	preAccelZ = dataAccelZ[preIndex];
 	if(filterAccelZ > threshold && curAccelZ > preAccelZ && filterAccelZ < preAccelZ) {
-		thresholdCount = 1;
+		thresholdCount++;
 	}
 	
-	if(thresholdCount == 1) {
+	if(thresholdCount > 1) {
 		stepCount++; //Dem buoc chan
 		
 		//In so buoc chan ra man hinh
-		CLCD_I2C_SetCursor(&LCD1,2,0);
-		CLCD_I2C_WriteString(&LCD1, "So buoc chan");
 		sprintf(buf, "%d", stepCount);
 		CLCD_I2C_SetCursor(&LCD1,6,1);
 		CLCD_I2C_WriteString(&LCD1, buf);

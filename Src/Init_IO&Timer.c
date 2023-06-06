@@ -40,7 +40,7 @@ void Init_Timer(void) {
 	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;  //Enable clock TIM2
   TIM2->CR1 |= TIM_CR1_CEN | TIM_CR1_ARPE; 	//Enable counter, auto reload
 	TIM2->DIER |= TIM_DIER_UIE;  //Enable TIM2 interrupt
-	TIM2->PSC = 6000 - 1;
+	TIM2->PSC = 6000 - 1; // tDelay = (PSC+1)*(ARR+1)/SrcClock 
   TIM2->ARR = 300 - 1;
 	NVIC_SetPriority(TIM2_IRQn,7);
 	NVIC_EnableIRQ(TIM2_IRQn);

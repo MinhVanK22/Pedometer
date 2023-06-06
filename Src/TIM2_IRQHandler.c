@@ -3,7 +3,7 @@
 
 void TIM2_IRQHandler(void) {
     if(TIM2->SR & TIM_SR_UIF) {
-			MPU6050_Counter(); //Dem buoc chan, chu ky lay mau 25ms
+			MPU6050_Counter(); //Dem buoc chan
 			
 			TIM2->SR &= ~TIM_SR_UIF; // Clear interrupt flag
     }
